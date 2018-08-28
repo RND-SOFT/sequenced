@@ -64,8 +64,9 @@ module Sequenced
     end
 
     module InstanceMethods
-      def set_sequential_ids
+      def set_sequential_ids update_if_not_last: false
         self.class.base_class.sequenced_options.each do |options|
+          options.merge!(update_if_not_last: update_if_not_last)
           Sequenced::Generator.new(self, options).set
         end
       end
